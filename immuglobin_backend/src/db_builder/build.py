@@ -15,10 +15,8 @@ def create_tests(tests):
 
 
 def create_roles(roles):
-    admin = Role("admin", ["create", "read", "update", "delete"])
     patient = Role("patient", ["read", "update"])
     doctor = Role("doctor", ["read", "update", "create", "delete"])
-    roles.insert_one(admin.to_dict())
     roles.insert_one(patient.to_dict())
     roles.insert_one(doctor.to_dict())
 
@@ -44,6 +42,6 @@ def build():
     users.drop()
     roles.drop()
     create_roles(roles)
-    create_users(users, roles)
-    create_tests(tests)
+    # create_users(users, roles)
+    # create_tests(tests)
     client.close()

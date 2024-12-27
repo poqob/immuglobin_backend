@@ -16,7 +16,7 @@ class Authenticate:
         # Find the user by email
         user = self.users.find_one({"email": email, "password": password})
         if user is None:
-            print("User not found")
+            # print("User not found")
             return None
         # Return the appropriate user object based on the role
         role = user.get("role")

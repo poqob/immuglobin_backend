@@ -13,16 +13,16 @@ class Authorize:
         self.users = self.db["users"]
         self.roles = self.db["roles"]
 
-    def authorize(self, email, action)->bool:
+    def authorize(self, email,password, actions)->bool:
          # Find the user by email
-        user = self.users.find_one({"email": email})
+        user = self.users.find_one({"email": email,"password":password}) 
         if user is None:
             print("User not found")
             return False
         # Return the appropriate user object based on the role
         role = user.get("role")
         if role is not None:
-            return action in role.get("permissions")
+            return all(item in role.get("permissions") for item in actions)
         return False
 
     def close(self):
