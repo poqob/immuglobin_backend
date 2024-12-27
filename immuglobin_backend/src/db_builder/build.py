@@ -34,7 +34,7 @@ def create_users(users, roles):
 
 def build():
     config = ConfigParser()
-    config.read("D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\src\\mongo.ini")
+    config.read("D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\mongo.ini")
     client = pymongo.MongoClient(config["DATABASE"]["url"])
     db = client["local"]
     users = db["users"]

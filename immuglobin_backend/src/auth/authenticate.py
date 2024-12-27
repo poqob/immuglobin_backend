@@ -1,14 +1,13 @@
-from src.model.role import Role
-from src.model.user.doctor import Doctor
+from src.model.user.doctor import Doctor,User
 from src.model.user.patience import Patience
 from configparser import ConfigParser
-import pymongo
+from  pymongo import MongoClient
 
 class Authenticate:
-    def __init__(self, config_path="D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\src\\mongo.ini"):
+    def __init__(self, config_path="D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\mongo.ini"):
         config = ConfigParser()
         config.read(config_path)
-        self.client = pymongo.MongoClient(config["DATABASE"]["url"])
+        self.client = MongoClient(config["DATABASE"]["url"])
         self.db = self.client[config["DATABASE"]["client"]]
         self.users = self.db["users"]
         self.roles = self.db["roles"]

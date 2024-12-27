@@ -5,7 +5,7 @@ from configparser import ConfigParser
 import pymongo
 
 class Authorize:
-    def __init__(self, config_path="D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\src\\mongo.ini"):
+    def __init__(self, config_path="D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\mongo.ini"):
         config = ConfigParser()
         config.read(config_path)
         self.client = pymongo.MongoClient(config["DATABASE"]["url"])

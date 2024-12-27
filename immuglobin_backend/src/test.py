@@ -1,11 +1,11 @@
 # test.py
 from src.model.role import Role
-from src.model.user.user import User
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
-
 from src.auth.authenticate import Authenticate
 from src.auth.authorization import Authorize
+
+from src.methods.db_methods import *
 
 def test_role():
     pass
@@ -29,4 +29,9 @@ def test_authorize():
     authen = Authenticate()
     auth = Authorize()
     user = authen.authenticate("doctor@gmail.com", "password")
-    print( auth.authorize(user.email, "delete") )
+    assert auth.authorize(user.email, "delete") == True
+
+
+def test_db_methods():
+    add_user({"email": "test@gmail.com", "password": "password", "role": {"role": "test", "permissions": ["create", "read", "update", "delete"]}})
+    print(get_all_users())
