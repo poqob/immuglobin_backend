@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from configparser import ConfigParser
 from pymongo import MongoClient
-from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password
+from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
 from src.auth.authenticate import Authenticate
@@ -139,6 +139,27 @@ def change_pass():
         return jsonify({"error": "Password must be at least 8 characters long and contain at least one digit"}), 400
 
     result = change_password(email, old_password, new_password)
+    
+    if result.get("error"):
+        return jsonify(result), 400
+    
+    return jsonify(result), 201
+
+
+@app.route('/change_email', methods=['POST'])
+def change_mail():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    email = data.get("old_email")
+    new_email = data.get("new_email")
+    password = data.get("password")
+    
+    if not email or not new_email or not password:
+        return jsonify({"error": "Email, new email and password are required"}), 400
+    
+    result = change_email(email, new_email, password)
     
     if result.get("error"):
         return jsonify(result), 400

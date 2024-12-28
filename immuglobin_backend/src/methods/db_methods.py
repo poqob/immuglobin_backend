@@ -52,6 +52,12 @@ def change_password(email, old_password, new_password):
     return {"message": "Password changed"}
 
 
+def change_email(email, new_email, password):
+    result = users_collection.update_one({"email":email,"password":password}, {"$set": {"email":new_email}})
+    if result.modified_count == 0:
+            return {"error": "User not found. Incorrect password or email"}
+    return {"message": "E-Mail changed"}
+
 # Function to check if email already exists
 def is_email_taken(email):
     return users_collection.find_one({"email": email}) is not None
