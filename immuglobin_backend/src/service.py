@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from configparser import ConfigParser
 from pymongo import MongoClient
-from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email
+from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email,is_id_taken,get_all_referances
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
 from src.auth.authenticate import Authenticate
@@ -89,7 +89,11 @@ def register_user():
 
     email = data.get("email")
     password = data.get("password")
+    id = data.get("id")
     
+    if is_id_taken(id):
+        return jsonify({"error": "ID already taken"}), 400
+
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
     
@@ -165,6 +169,15 @@ def change_mail():
         return jsonify(result), 400
     
     return jsonify(result), 201
+
+@app.route('/get_all_referances', methods=['GET'])
+def get_all_referancess():
+    referances = get_all_referances()
+    if referances:
+        return jsonify(referances)
+    return jsonify({"error": "Referances not found"}), 404
+
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,60 @@
+{
+    "imm": "IgG3",
+    "ref": "Turkjmed",
+    "values": [
+        {
+            "subj": 30,
+            "gms": 0.4878,
+            "min": 0.198,
+            "max": 0.75,
+            "min_age": 25,
+            "max_age": 36
+        },
+        {
+            "subj": 30,
+            "gms": 0.4405,
+            "min": 0.208,
+            "max": 0.932,
+            "min_age": 36,
+            "max_age": 60
+        },
+        {
+            "subj": 30,
+            "gms": 0.5682,
+            "min": 0.189,
+            "max": 1.35,
+            "min_age": 72,
+            "max_age": 96
+        },
+        {
+            "subj": 30,
+            "gms": 0.7759,
+            "min": 0.341,
+            "max": 2.00,
+            "min_age": 108,
+            "max_age": 132
+        },
+        {
+            "subj": 30,
+            "gms": 0.7530,
+            "min": 0.352,
+            "max": 1.50,
+            "min_age": 144,
+            "max_age": 192
+        },
+        {
+            "subj": 30,
+            "gms": 0.8633,
+            "min": 0.293,
+            "max": 2.00,
+            "min_age": 192,
+            "max_age": 216
+        },
+        {
+            "subj": 180,
+            "gms": 0.6272,
+            "min": 0.189,
+            "max": 2.00
+        }
+    ]
+}

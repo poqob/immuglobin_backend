@@ -1,0 +1,118 @@
+{
+    "imm": "IgG3",
+    "ref": "tjp",
+    "values": [
+        {
+            "subj": 15,
+            "gms": 0.37,
+            "min": 0.18,
+            "max": 0.78,
+            "min_age": 0,
+            "max_age": 30
+        },
+        {
+            "subj": 10,
+            "gms": 0.24,
+            "min": 0.13,
+            "max": 0.53,
+            "min_age": 1,
+            "max_age": 150
+        },
+        {
+            "subj": 14,
+            "gms": 0.35,
+            "min": 0.14,
+            "max": 1.00,
+            "min_age": 6,
+            "max_age": 240
+        },
+        {
+            "subj": 29,
+            "gms": 0.38,
+            "min": 0.18,
+            "max": 1.10,
+            "min_age": 9,
+            "max_age": 360
+        },
+        {
+            "subj": 65,
+            "gms": 0.37,
+            "min": 0.16,
+            "max": 1.32,
+            "min_age": 13,
+            "max_age": 720
+        },
+        {
+            "subj": 54,
+            "gms": 0.32,
+            "min": 0.14,
+            "max": 1.25,
+            "min_age": 25,
+            "max_age": 1080
+        },
+        {
+            "subj": 45,
+            "gms": 0.37,
+            "min": 0.15,
+            "max": 1.20,
+            "min_age": 37,
+            "max_age": 1440
+        },
+        {
+            "subj": 54,
+            "gms": 0.37,
+            "min": 0.15,
+            "max": 1.07,
+            "min_age": 49,
+            "max_age": 2160
+        },
+        {
+            "subj": 62,
+            "gms": 0.51,
+            "min": 0.21,
+            "max": 1.86,
+            "min_age": 504,
+            "max_age": 2880
+        },
+        {
+            "subj": 65,
+            "gms": 0.51,
+            "min": 0.20,
+            "max": 2.00,
+            "min_age": 756,
+            "max_age": 3240
+        },
+        {
+            "subj": 34,
+            "gms": 0.53,
+            "min": 0.29,
+            "max": 2.00,
+            "min_age": 936,
+            "max_age": 3600
+        },
+        {
+            "subj": 29,
+            "gms": 0.80,
+            "min": 0.28,
+            "max": 2.23,
+            "min_age": 1092,
+            "max_age": 3960
+        },
+        {
+            "subj": 18,
+            "gms": 0.58,
+            "min": 0.30,
+            "max": 1.20,
+            "min_age": 1260,
+            "max_age": 4320
+        },
+        {
+            "subj": 21,
+            "gms": 0.50,
+            "min": 0.21,
+            "max": 1.52,
+            "min_age": 1260,
+            "max_age": 4320
+        }
+    ]
+}

@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from src.model.user.user import User
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
+from src.model.referance.ref_data import RefDataModel,RefValue
 
 
 config_path="D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\mongo.ini"
@@ -13,7 +14,7 @@ client = MongoClient(config["DATABASE"]["url"])
 db = client["local"]
 users_collection = db["users"]
 roles_collection = db["roles"]
-
+referance_collection = db["referances"]
 
 def get_all_users():
     return list(users_collection.find({}, {"_id": 0}))
@@ -33,6 +34,7 @@ def add_user(user_data):
 
     result = users_collection.insert_one(user.to_dict())
     return {"inserted_id": str(result.inserted_id)}
+
 
 def delete_user(email, password):
     try:
@@ -62,9 +64,18 @@ def change_email(email, new_email, password):
 def is_email_taken(email):
     return users_collection.find_one({"email": email}) is not None
 
+def is_id_taken(id):
+    return users_collection.find_one({"id": id}) is not None
+
 def password_limitations(password):
     if len(password) < 8:
         return False
     if not any(char.isdigit() for char in password):
         return False
     return True
+
+def get_all_referances():
+    res = list(referance_collection.find({}, {"_id": 0}))
+    return res
+
+
