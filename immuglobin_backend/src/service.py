@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from configparser import ConfigParser
 from pymongo import MongoClient
-from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email,is_id_taken,get_all_referances
+from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email,is_id_taken,get_all_referances,add_report,delete_deport,get_all_reports,get_reports
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
 from src.auth.authenticate import Authenticate
@@ -177,8 +177,60 @@ def get_all_referancess():
         return jsonify(referances)
     return jsonify({"error": "Referances not found"}), 404
 
+@app.route('/get_all_reports', methods=['GET'])
+def get_all_reportss():
+    reports = get_all_reports()
+    if reports:
+        return jsonify(reports), 200
+    return jsonify({"error": "Reports not found"}), 404
 
 
+@app.route('/submit_report', methods=['POST'])
+def add_reportt():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    user_id = data.get("user_id")
+    doctor_id = data.get("doctor_id")
+    immun = data.get("immun")
+    result = data.get("result")
+    timestamp = data.get("timestamp")
+    
+    if not user_id or not doctor_id or not immun or not result or not timestamp:
+        return jsonify({"error": "User ID, doctor ID, immun, result and timestamp are required"}), 400
+    
+    result = add_report(user_id, doctor_id, immun, result, timestamp)
+
+    if result.get("error"):
+        return jsonify(result), 400
+    return jsonify(result), 201
+
+
+@app.route('/remove_report', methods=['POST'])
+def delete_deportt():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    id = data.get("id")
+    
+    if not id:
+        return jsonify({"error": "ID is required"}), 400
+    
+    result = delete_deport(id)
+
+    if result.get("error"):
+        return jsonify(result), 400
+    return jsonify(result), 201
+
+@app.route('/get_reports_by_user_id', methods=['POST'])
+def get_reports_by_user_id():
+    data = request.json
+    reports = get_reports(data.get('user_id'))
+    if reports:
+        return jsonify(reports), 200
+    return jsonify({"error": "Reports not found"}), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=5000)

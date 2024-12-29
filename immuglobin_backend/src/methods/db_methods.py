@@ -4,6 +4,7 @@ from src.model.user.user import User
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
 from src.model.referance.ref_data import RefDataModel,RefValue
+from src.model.report.report import Report
 
 
 config_path="D:\\Dosyalar\\projeler\\py\\immuglobin_backend\\immuglobin_backend\\mongo.ini"
@@ -15,6 +16,7 @@ db = client["local"]
 users_collection = db["users"]
 roles_collection = db["roles"]
 referance_collection = db["referances"]
+report_collection = db["reports"]
 
 def get_all_users():
     return list(users_collection.find({}, {"_id": 0}))
@@ -78,4 +80,25 @@ def get_all_referances():
     res = list(referance_collection.find({}, {"_id": 0}))
     return res
 
+def get_all_reports():
+    res = list(report_collection.find({}, {"_id": 0}))
+    return res
+
+def get_reports(user_id):
+    res = list(report_collection.find({"user_id": user_id}, {"_id": 0}))
+    return res
+
+
+def add_report(user_id, doctor_id, immun, result, timestamp):
+    report = Report(user_id, doctor_id, immun, result, timestamp)
+    result = report_collection.insert_one(report.to_dict())
+    if result.inserted_id is None:
+        return {"error": "Report not inserted"}
+    return {"inserted_id": str(result.inserted_id)}
+
+def delete_deport(id):
+    result = report_collection.delete_one({"id": id})
+    if result.deleted_count == 0:
+        return {"error": "Report not found"}
+    return {"message": "Report deleted"}
 
