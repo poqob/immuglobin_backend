@@ -24,6 +24,9 @@ def get_all_users():
 def get_user_by_email(email):
     return users_collection.find_one({"email": email}, {"_id": 0})
 
+def get_user_by_id(id):
+    return users_collection.find_one({"id": id}, {"_id": 0})
+
 def add_user(user_data):
     #parse user data
     user = None
@@ -84,17 +87,30 @@ def get_all_reports():
     res = list(report_collection.find({}, {"_id": 0}))
     return res
 
-def get_reports(user_id):
+def get_reports_by_user_idd(user_id):
     res = list(report_collection.find({"user_id": user_id}, {"_id": 0}))
     return res
 
+def get_reports_by_user_namee(user_name):
+    res = list(report_collection.find({"user_name": user_name}, {"_id": 0}))
+    return res
 
-def add_report(user_id, doctor_id, immun, result, timestamp):
-    report = Report(user_id, doctor_id, immun, result, timestamp)
+
+def add_report(user_id,user_name, doctor_id, immun, timestamp):
+    report = Report(user_id,user_name, doctor_id, immun, timestamp)
     result = report_collection.insert_one(report.to_dict())
     if result.inserted_id is None:
         return {"error": "Report not inserted"}
     return {"inserted_id": str(result.inserted_id)}
+
+
+def add_referance(ref_data):
+    ref = RefDataModel.from_dict(ref_data)
+    result = referance_collection.insert_one(ref.to_dict())
+    if result.inserted_id is None:
+        return {"error": "Referance not inserted"}
+    return {"inserted_id": str(result.inserted_id)}
+
 
 def delete_deport(id):
     result = report_collection.delete_one({"id": id})

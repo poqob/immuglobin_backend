@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from configparser import ConfigParser
 from pymongo import MongoClient
-from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email,is_id_taken,get_all_referances,add_report,delete_deport,get_all_reports,get_reports
+from src.methods.db_methods import get_all_users, get_user_by_email, add_user,delete_user,is_email_taken,password_limitations,change_password,change_email,is_id_taken,get_all_referances,add_report,delete_deport,get_all_reports,get_reports_by_user_idd,get_reports_by_user_namee,get_user_by_id,add_referance
 from src.model.user.doctor import Doctor
 from src.model.user.patience import Patience
 from src.auth.authenticate import Authenticate
@@ -170,6 +170,16 @@ def change_mail():
     
     return jsonify(result), 201
 
+@app.route('/get_user_by_id', methods=['POST'])
+def get_user_by_idd():
+    data = request.json
+    print(data)
+    user = get_user_by_id(data.get('id'))
+    if user:
+        return jsonify(user), 200
+    return jsonify({"error": "User not found"}), 404
+
+
 @app.route('/get_all_referances', methods=['GET'])
 def get_all_referancess():
     referances = get_all_referances()
@@ -192,15 +202,15 @@ def add_reportt():
         return jsonify({"error": "Invalid input"}), 400
 
     user_id = data.get("user_id")
+    user_name = data.get("user_name")
     doctor_id = data.get("doctor_id")
     immun = data.get("immun")
-    result = data.get("result")
     timestamp = data.get("timestamp")
     
-    if not user_id or not doctor_id or not immun or not result or not timestamp:
+    if not user_id or not doctor_id or not immun or not timestamp:
         return jsonify({"error": "User ID, doctor ID, immun, result and timestamp are required"}), 400
     
-    result = add_report(user_id, doctor_id, immun, result, timestamp)
+    result = add_report(user_id,user_name, doctor_id, immun, timestamp)
 
     if result.get("error"):
         return jsonify(result), 400
@@ -227,10 +237,34 @@ def delete_deportt():
 @app.route('/get_reports_by_user_id', methods=['POST'])
 def get_reports_by_user_id():
     data = request.json
-    reports = get_reports(data.get('user_id'))
+    reports = get_reports_by_user_idd(data.get('user_id'))
+
     if reports:
         return jsonify(reports), 200
     return jsonify({"error": "Reports not found"}), 404
+
+
+@app.route('/get_reports_by_user_name', methods=['POST'])
+def get_reports_by_user_name():
+    data = request.json
+    reports = get_reports_by_user_namee(data.get('user_name'))
+    if reports:
+        return jsonify(reports), 200
+    return jsonify({"error": "Reports not found"}), 404
+
+
+@app.route('/submit_referance', methods=['POST'])
+def add_referancee():
+    data = request.json
+    if not data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    result = add_referance(data)
+
+    if result.get("error"):
+        return jsonify(result), 400
+    return jsonify(result), 201
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000)
